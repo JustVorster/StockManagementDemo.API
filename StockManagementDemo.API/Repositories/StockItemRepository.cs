@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StockManagementDemo.API.Data;
 using StockManagementDemo.API.Interfaces;
 using StockManagementDemo.API.Models;
-using StockManagementDemo.API.Data;
 
 namespace StockManagementDemo.API.Repositories
 {
@@ -19,6 +19,7 @@ namespace StockManagementDemo.API.Repositories
             return await _context.StockItems
                 .Include(s => s.Accessories)
                 .Include(s => s.Images)
+                .AsSplitQuery()
                 .ToListAsync();
         }
 
@@ -27,12 +28,13 @@ namespace StockManagementDemo.API.Repositories
             return await _context.StockItems
                 .Include(s => s.Accessories)
                 .Include(s => s.Images)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task AddAsync(StockItem stockItem)
         {
-            await _context.StockItems.AddAsync(stockItem);
+            _context.StockItems.Add(stockItem);
             await _context.SaveChangesAsync();
         }
 
@@ -45,7 +47,7 @@ namespace StockManagementDemo.API.Repositories
         public async Task DeleteAsync(int id)
         {
             var item = await _context.StockItems.FindAsync(id);
-            if (item is not null)
+            if (item != null)
             {
                 _context.StockItems.Remove(item);
                 await _context.SaveChangesAsync();
@@ -54,7 +56,7 @@ namespace StockManagementDemo.API.Repositories
 
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _context.StockItems.AnyAsync(x => x.Id == id);
+            return await _context.StockItems.AnyAsync(s => s.Id == id);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace StockManagementDemo.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] 
+    [Authorize]
     public class StockItemsController : ControllerBase
     {
         private readonly StockItemService _service;
@@ -22,6 +22,7 @@ namespace StockManagementDemo.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var items = await _service.GetAllAsync();
+
             var dtos = items.Select(item => new StockItemReadDto
             {
                 Id = item.Id,
