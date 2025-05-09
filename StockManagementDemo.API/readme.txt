@@ -1,63 +1,101 @@
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (415ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
-      CREATE DATABASE [StockManagementDemo];
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (98ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
-      IF SERVERPROPERTY('EngineEdition') <> 5
-      BEGIN
-          ALTER DATABASE [StockManagementDemo] SET READ_COMMITTED_SNAPSHOT ON;
-      END;
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT 1
-Microsoft.EntityFrameworkCore.Migrations[20411]
-      Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
-Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (24ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      DECLARE @result int;
-      EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
-      SELECT @result
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
-      BEGIN
-          CREATE TABLE [__EFMigrationsHistory] (
-              [MigrationId] nvarchar(150) NOT NULL,
-              [ProductVersion] nvarchar(32) NOT NULL,
-              CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
-          );
-      END;
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT 1
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT [MigrationId], [ProductVersion]
-      FROM [__EFMigrationsHistory]
-      ORDER BY [MigrationId];
-Microsoft.EntityFrameworkCore.Migrations[20402]
-      Applying migration '20250508084157_InitialCreate'.
-Applying migration '20250508084157_InitialCreate'.
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      CREATE TABLE [Users] (
-          [Id] int NOT NULL IDENTITY,
-          [Username] nvarchar(max) NOT NULL,
-          [Email] nvarchar(max) NOT NULL,
-          [PasswordHash] nvarchar(max) NOT NULL,
-          [Role] nvarchar(max) NOT NULL,
-          CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
-      );
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-      VALUES (N'20250508084157_InitialCreate', N'9.0.4');
-Microsoft.EntityFrameworkCore.Database.Command[20101]
-      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      DECLARE @result int;
-      EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
-      SELECT @result
+﻿
+CMS Stock Management Backend (ASP.NET Core 8 Web API)
+=====================================================
+
+This is the backend service for the CMS Stock Management system. It provides secure API endpoints for managing stock vehicles, images, accessories, and user authentication.
+
+Tech Stack
+----------
+- ASP.NET Core 8 Web API
+- Entity Framework Core (Code First)
+- SQL Server / LocalDB
+- JWT Authentication
+- Swagger/OpenAPI
+
+Requirements
+------------
+- .NET 8 SDK
+- SQL Server LocalDB or Express
+- EF Core Tools:
+  dotnet tool install --global dotnet-ef
+
+Setup & Run
+-----------
+1. Clone & Navigate
+
+   git clone <https://github.com/JustVorster/StockManagementDemo.API>
+   cd StockManagementDemo.API
+
+2. Restore Dependencies
+
+   dotnet restore
+
+3. Apply Migrations & Create DB
+
+   dotnet ef database update
+
+4. Run API
+
+   dotnet run
+
+5. Open Swagger
+
+   https://localhost:7140/swagger
+
+Authentication
+--------------
+- JWT-based auth
+- Use /api/auth/register and /api/auth/login
+- Token is returned on login and must be sent as Authorization: Bearer <token>
+
+Test user (auto-seeded):
+Username: demo
+Password: Demo1234!
+
+Seeding
+-------
+If the database is empty, it will auto-seed:
+- 2 Stock Items with Accessories
+- 1 Test User
+
+This logic lives inside Program.cs.
+
+Database Structure
+------------------
+- StockItems
+- Accessories (linked by StockItemId)
+- Images (byte array stored in DB, max 3 per stock item)
+- Users (auth via hashed password)
+
+API Endpoints
+-------------
+| Endpoint                | Method | Auth | Description                      |
+|------------------------|--------|------|----------------------------------|
+| /api/auth/register     | POST   | ❌   | Register new user                |
+| /api/auth/login        | POST   | ❌   | Authenticate + return JWT        |
+| /api/stockitems        | GET    | ✅   | Get all stock items              |
+| /api/stockitems/{id}   | GET    | ✅   | Get stock item by ID             |
+| /api/stockitems        | POST   | ✅   | Create stock item                |
+| /api/stockitems/{id}   | PUT    | ✅   | Update stock item                |
+| /api/stockitems/{id}   | DELETE | ✅   | Delete stock item                |
+| /api/images/upload     | POST   | ✅   | Upload image to stock item       |
+
+Environment Variables
+---------------------
+In appsettings.json:
+
+"ConnectionStrings": {
+  "DefaultConnection": "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockDemoDb;Integrated Security=True;"
+},
+"Jwt": {
+    "Key": "yWk5g1a2yTcZp9Tq68S93zGJk26WeCr6Cp0xq92z0Og=",
+    "Issuer": "StockManagementAPI",
+    "Audience": "StockManagementClient"
+},
+
+Reset DB (Optional)
+-------------------
+dotnet ef database drop
+dotnet ef database update
+
+
