@@ -19,7 +19,7 @@ namespace StockManagementDemo.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var accessories = await _context.Accessories.Include(a => a.StockItem).ToListAsync();
+            var accessories = await _context.Accessories.Include(a => a.Garment).ToListAsync();
             return Ok(accessories);
         }
 
@@ -51,7 +51,7 @@ namespace StockManagementDemo.API.Controllers
 
             existing.Name = updated.Name;
             existing.Description = updated.Description;
-            existing.StockItemId = updated.StockItemId;
+            existing.GarmentId = updated.GarmentId;
 
             await _context.SaveChangesAsync();
             return NoContent();

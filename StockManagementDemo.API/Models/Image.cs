@@ -1,5 +1,4 @@
-﻿
-namespace StockManagementDemo.API.Models
+﻿namespace StockManagementDemo.API.Models
 {
     public class Image
     {
@@ -9,8 +8,8 @@ namespace StockManagementDemo.API.Models
 
         public byte[]? Data { get; set; }
 
-        public int StockItemId { get; set; }
+        public int GarmentId { get; set; }
 
-        public StockItem? StockItem { get; set; }
+        public Garment? Garment { get; set; }
     }
 }

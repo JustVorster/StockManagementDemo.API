@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿/*
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockManagementDemo.API.DTOs;
 using StockManagementDemo.API.Models;
@@ -127,4 +128,4 @@ namespace StockManagementDemo.API.Controllers
             return NoContent();
         }
     }
-}
+} */

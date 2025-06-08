@@ -9,6 +9,6 @@ namespace StockManagementDemo.API.DTOs
         public IFormFile? File { get; set; }
 
         [Required]
-        public int StockItemId { get; set; }
+        public int GarmentId { get; set; }
     }
 }

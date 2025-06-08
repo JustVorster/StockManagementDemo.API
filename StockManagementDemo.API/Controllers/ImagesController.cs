@@ -20,7 +20,7 @@ namespace StockManagementDemo.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var images = await _context.Images.Include(i => i.StockItem).ToListAsync();
+            var images = await _context.Images.Include(i => i.Garment).ToListAsync();
             return Ok(images);
         }
 
@@ -60,9 +60,9 @@ namespace StockManagementDemo.API.Controllers
             if (dto.File == null || dto.File.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            var item = await _context.StockItems
+            var item = await _context.Garments
                 .Include(s => s.Images)
-                .FirstOrDefaultAsync(s => s.Id == dto.StockItemId);
+                .FirstOrDefaultAsync(s => s.Id == dto.GarmentId);
 
             if (item is null)
                 return NotFound("Stock item not found.");
@@ -77,7 +77,7 @@ namespace StockManagementDemo.API.Controllers
             {
                 Name = dto.File.FileName,
                 Data = memoryStream.ToArray(),
-                StockItemId = dto.StockItemId
+                GarmentId = dto.GarmentId
             };
 
             _context.Images.Add(image);
