@@ -99,7 +99,6 @@ using(var scope = app.Services.CreateScope())
         var passwordHasher = new BCrypt.Net.BCrypt();
         if (!db.Users.Any())
         {
-            // Replace the problematic line with the correct method call
             var passwordHash = BCrypt.Net.BCrypt.HashPassword("Demo1234!");
             _ = db.Users.Add(new User
             {
