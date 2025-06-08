@@ -17,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<MvcOptions>(opts =>
+{
+    opts.Conventions.Add(new SwaggerAllowAnonymousConvention());
+});
 builder.Services.AddScoped<IGarmentRepository, GarmentRepository>();
 
 // SQL Server 
