@@ -64,15 +64,15 @@ namespace StockManagementDemo.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("search")]
         [AllowAnonymous]
 
         public async Task<IActionResult> GetFiltered(
-            [FromQuery] string? size,
-            [FromQuery] decimal? priceMax,
-            [FromQuery] string? occasion,
-            [FromQuery] bool? resaleOnly,
-            [FromServices] AnalyticsLoggerService analyticsLogger)
+        [FromQuery] string? size,
+        [FromQuery] decimal? priceMax,
+        [FromQuery] string? occasion,
+        [FromQuery] bool? resaleOnly,
+        [FromServices] AnalyticsLoggerService analyticsLogger)
         {
             var query = _repository.GetQueryable();
 
@@ -110,7 +110,6 @@ namespace StockManagementDemo.API.Controllers
 
             return Ok(dtos);
         }
-
 
 
         [HttpGet("{id}/calendar")]
