@@ -21,7 +21,12 @@ builder.Services.Configure<MvcOptions>(opts =>
 {
     opts.Conventions.Add(new SwaggerAllowAnonymousConvention());
 });
+builder.Services.AddScoped<RentalService>();
 builder.Services.AddScoped<IGarmentRepository, GarmentRepository>();
+builder.Services.AddScoped<GarmentService>();
+builder.Services.AddScoped<LenderAnalyticsService>();
+builder.Services.AddScoped<AnalyticsLoggerService>();
+
 
 // SQL Server 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

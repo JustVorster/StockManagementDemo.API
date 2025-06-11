@@ -58,5 +58,10 @@ namespace StockManagementDemo.API.Repositories
         {
             return await _context.Garments.AnyAsync(g => g.Id == id);
         }
+
+        public IQueryable<Garment> GetQueryable()
+        {
+            return _context.Garments.AsQueryable();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace StockManagementDemo.API.Data
         public DbSet<Accessory> Accessories { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<RentalPeriod> RentalPeriods { get; set; }
+        public DbSet<GarmentAnalyticsLog> GarmentAnalyticsLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
