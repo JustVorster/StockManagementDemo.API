@@ -3,11 +3,8 @@ using StockManagementDemo.API.Models;
 
 namespace StockManagementDemo.API.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Garment> Garments { get; set; }
         public DbSet<Accessory> Accessories { get; set; }
