@@ -1,14 +1,9 @@
 ﻿using StockManagementDemo.API.Data;
 using StockManagementDemo.API.Models;
 
-public class GarmentService
+public class GarmentService(ApplicationDbContext context)
 {
-    private readonly ApplicationDbContext _context;
-
-    public GarmentService(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ApplicationDbContext _context = context;
 
     public async Task<(bool IsValid, string? Error, Garment? Garment)> GetResaleGarmentAsync(int garmentId)
     {

@@ -8,14 +8,9 @@ namespace StockManagementDemo.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ImagesController : ControllerBase
+    public class ImagesController(ApplicationDbContext context) : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-
-        public ImagesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly ApplicationDbContext _context = context;
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

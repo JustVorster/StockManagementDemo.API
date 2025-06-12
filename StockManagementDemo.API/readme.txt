@@ -1,8 +1,8 @@
 ﻿
-CMS Stock Management Backend (ASP.NET Core 8 Web API)
+Rental & Resale plugin Backend (ASP.NET Core 8 Web API)
 =====================================================
 
-This is the backend service for the CMS Stock Management system. It provides secure API endpoints for managing stock vehicles, images, accessories, and user authentication.
+This is the backend service for the Rental and Resale system. It provides secure API endpoints for managing stock, images, accessories, and user authentication.
 
 Tech Stack
 ----------
@@ -55,7 +55,6 @@ Password: Demo1234!
 Seeding
 -------
 If the database is empty, it will auto-seed:
-- 2 Stock Items with Accessories
 - 1 Test User
 
 This logic lives inside Program.cs.

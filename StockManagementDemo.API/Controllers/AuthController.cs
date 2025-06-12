@@ -7,14 +7,9 @@ namespace StockManagementDemo.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController(IAuthService auth) : ControllerBase
     {
-        private readonly IAuthService _auth;
-
-        public AuthController(IAuthService auth)
-        {
-            _auth = auth;
-        }
+        private readonly IAuthService _auth = auth;
 
         [AllowAnonymous]
         [HttpPost("register")]
